@@ -4,6 +4,10 @@ const Item = require('../schema/price');
 const dotenv = require('dotenv');
 dotenv.config();
 
+function removeQuotes(obj) { let json = JSON.stringify(obj); 
+    json = json.replace(/"([^"]+)":/g, '$1:');
+ return JSON.parse(json);
+}
 
 router.get('/', async (req, res) => { 
     Item.find().limit(5).exec((error, items) => {
@@ -20,19 +24,15 @@ router.get('/', async (req, res) => {
     });
 });
 
-router.post('/', async (req, res) => {
-    try {
-        // Get the array of item IDs from the request body
-        const itemIds = req.body.id;
-
-        // Find all items that match the given IDs
-        const items = await Item.find({ id: { $in: itemIds } });
-
-        // Send the total price in the response
-        res.send(items);
-    } catch (err) {
-        res.status(400).send(err);
-    }
+router.get('/cart', async (req, res) => {
+    const ids=req.body.ids;
+    Item.find({ id: { $in: ids } }, (err, items) => {
+        if (err) {
+            // handle error
+        } else {
+            console.log(items);
+        }
+    });
 });
 
 router.post('/cal', async (req, res) => {
