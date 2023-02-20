@@ -5,10 +5,9 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 
-router.get('/p/:p', (req, res) => { 
+router.get('/', (req, res) => { 
 	var limit =5;
-	const page = req.params.p;
-        //var page = parseInt(req.query.p);
+        var page = parseInt(req.query.p);
 	var skip = (page - 1) * limit;
     Item.find().skip(skip).limit(limit).exec((error, items) => {
         if (error) {
