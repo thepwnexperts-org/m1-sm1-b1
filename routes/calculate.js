@@ -63,8 +63,6 @@ router.post('/cal', async (req, res) => {
 
 router.post('/create', async (req, res) => {
 
-    
-
     //validate using joi(schema)
     //const {error} = validation.val_user.validate(req.body);
     //res.send(error.details);
@@ -73,8 +71,8 @@ router.post('/create', async (req, res) => {
     const ids = req.body.id;
     try {
     const id = await Item.find({id: ids});
-    console.log(id.length);
-    if ((id.length > 0)) {
+
+    if ((id.length > 0) && waf) {
         res.status(406).send('id already exits so try with another id');
         return;
     }
@@ -91,8 +89,7 @@ router.post('/create', async (req, res) => {
                 price   :req.body.price
             });
         
-            
-            //console.log('before save');
+
             let savequery = await new_query.save();
             res.send("product saved successfully");
             
