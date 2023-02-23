@@ -56,4 +56,4 @@ app.get('/',(req,res)=>{
 
 
 //server 
-app.listen(3001);
+app.listen(3000);
