@@ -3,7 +3,7 @@ const router = require('express').Router();
 const Item = require('../schema/price');
 const dotenv = require('dotenv');
 dotenv.config();
-
+const waf = JSON.parse(process.env.waf);
 
 router.get('/p/:p', (req, res) => { 
 	var limit =5;
@@ -63,12 +63,25 @@ router.post('/cal', async (req, res) => {
 
 router.post('/create', async (req, res) => {
 
+    
 
     //validate using joi(schema)
     //const {error} = validation.val_user.validate(req.body);
     //res.send(error.details);
     //res.send(error.details[0].message);
     //if(error) return res.status(400).send(error.details[0].message);
+    const ids = req.body.id;
+    try {
+    const id = await Item.find({id: ids});
+    console.log(id.length);
+    if ((id.length > 0)) {
+        res.status(406).send('id already exits so try with another id');
+        return;
+    }
+} catch (err) {
+    res.status(500).send(err);
+    return;
+}
     try{
         const new_query=new Item(
             {
@@ -85,7 +98,7 @@ router.post('/create', async (req, res) => {
             
         }catch(err)
         {
-            res.status(400).send( err );
+            res.status(406).send( err );
         }
 });
 
