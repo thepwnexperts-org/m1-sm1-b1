@@ -29,11 +29,11 @@ db.connect(process.env.dburi)
   .catch(err => console.log(`DB Connection Error: ${err.message}`));
 
 
-//local
+//live
 
-app.get('/',(req,res)=>{
+app.get('/live',(req,res)=>{
     console.log
-    res.send('we are on /');
+    res.send('we are on /live');
 });
 
     
