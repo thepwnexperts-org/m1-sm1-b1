@@ -249,4 +249,3 @@ Please provide a detailed description of your changes and why you think they sho
 This project is licensed under the [GPL-3.0 License](LICENSE).
 ```
 
-I've included the modified code for the `routes/calculate.js` file and updated the API endpoints section in the README accordingly. Feel free to adjust the code or provide more information if needed.
